@@ -2,7 +2,7 @@
 #include <math.h>
 
 float dist(float x_1, float x_2, float y_1, float y_2){
-    float d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2};
+    float d = sqrt((x_2 - x_1) + (y_2 - y_1));
     return d;
 }
 float main(){

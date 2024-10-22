@@ -6,17 +6,10 @@ int main() {
 
     for (int i = 1; i <= numero / 2; i++) {
         if (numero % i == 0) {
-            print (i)
+            printf ("%d\n", i);
             soma_divisores += i;
-            print (soma_divisores)
         }
     }
-
-    if (soma_divisores == numero) {
-        printf("O número é perfeito\n");
-    } else {
-        printf("O número não é perfeito\n");
-    }
-
+    printf ("%d", soma_divisores);
     return 0;
 }

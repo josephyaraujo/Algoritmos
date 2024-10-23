@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 int main() {
-    int n1, n2, maior, menor, valor;
+    int n1, n2, maior, menor, mdc;
     printf("Digite dois números: ");
     scanf("%d %d", &n1, &n2);
     
@@ -9,20 +9,17 @@ int main() {
         maior = n1;
         menor = n2;
     }
-    else ^{
+    else{
         maior = n2;
         menor = n1;
     }
-    while (valor == 0){
-        if (menor == maior-menor){
-            value = 1;
+    mdc = 1;
+    
+    for (int i = 2; i < menor; i++) {
+        if (maior%i == 0 && menor%i == 0){
+            mdc = i;
         }
-        else if (menor > maior - menor){
-            value = 0
-        }
-    }
-
-
-    }
+    }    
+    printf ("%d", mdc);
     return 0;
 }

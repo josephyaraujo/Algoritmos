@@ -1,12 +1,12 @@
 #include <stdio.h>
 int div( int a, int b){
     int cont = 0;
-    int x = a - b;
-    if (b>x){
-        return cont +=1;
+    if (a<b){
+        return cont;
     }
     else{
-        return div (x,b);
+        int x = a-b; 
+        return cont+= 1 + div (x,b);
     }
 }
 int main(){    

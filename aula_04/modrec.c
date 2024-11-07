@@ -1,8 +1,8 @@
 #include <stdio.h>
 int mod (int a, int b){
     int x = a - b;
-    if (b>x){
-        return x;
+    if (b>a){
+        return a;
     }
     else{
         return mod (x,b);

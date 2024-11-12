@@ -13,7 +13,7 @@ int main(){
                 int contador = 0;
                 for (int k = i-1; k < i+1; k++){
                     for (int l = j-1; l < j+1; l++){
-                        if (k<0 || k>4 || l<0 || l>4){
+                        if (k<0 || k>5 || l<0 || l>5){
                             continue;
                         }
                         if (campo [k][l]== -1){

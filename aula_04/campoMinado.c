@@ -1,22 +1,22 @@
 #include <stdio.h>
 int main(){
-    char campo [5][5]={
-        {"o","x","x","o","o"},
-        {"x","o","o","x","o"},
-        {"o","o","o","x","x"},
-        {"o","x","o","o","x"},
-        {"x","o","x","o","o"}
+    int campo [5][5]={
+        {0,-1,-1,0,0},
+        {-1,0,0,-1,0},
+        {0,0,0,-1,-1},
+        {0,-1,0,0,-1},
+        {-1,0,-1,0,0}
     };
     for (int i = 0; i<5; i++){
         for (int j = 0; j<5; j++){
             int contador = 0;
-            if (campo [i][j] == "o"){
+            if (campo [i][j] == 0){
                 for (int k = i-1; k <i+1; k++){
                     for (int l = j-1; l< j+1; l++){
                         if (k<0 || k>4 || l<0 || l>4){
                             continue;
                         }
-                        if (campo [i][j]== "x"){
+                        if (campo [i][j]== -1){
                             contador++;
                         }
                     }
@@ -25,7 +25,7 @@ int main(){
             }
             for (int i = 0; i<5; i++){
                 for (int j = 0; j<5; j++){
-                    printf ("%c ", campo [i][j]);
+                    printf ("%d ", campo [i][j]);
                 }
             }
         }

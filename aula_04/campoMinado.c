@@ -23,10 +23,10 @@ int main(){
                 }
                 campo[i][j] = contador;
             }
-            for (int i = 0; i<5; i++){
-                for (int j = 0; j<5; j++){
-                    printf ("%d ", campo [i][j]);
-                }
+        }
+        for (int i = 0; i<5; i++){
+            for (int j = 0; j<5; j++){
+                printf ("%d ", campo [i][j]);
             }
         }
         printf("\n");

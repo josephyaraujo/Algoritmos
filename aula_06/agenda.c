@@ -50,17 +50,30 @@ int main() {
         printf("Digite a opção desejada:");
         scanf("%d", &opcoes);
 
-        if (opcoes == 1 && cont){
-            }
+        if (opcoes == 1 && contador < sizeof(agenda)){
+            printf ("Inserir contato\n");
+            inserir(agenda, contador);
+            contador += 1;
         }    
-        if (opcoes == 2){
-            
+        else if (opcoes == 2){
+            listar (agenda, contador);
         }    
-        if (opcoes == 3){
-
+        else if (opcoes == 3){
+            printf ("Excluir contato\n");
+            listar (agenda, contador);
+            printf ("Qual contato vooê deseja excluir?");
+            scanf ("%d",&opContato); 
+            contador -= 1;
+            remover(agenda, opContato);
+            printf ("Contato removido\n");
         } 
-        if (opcoes == 4){
-
+        else if (opcoes == 4){
+            printf ("Atualizar contato\n");
+            listar(agenda, contador);
+            printf ("Qual contato você deseja alterar?");
+            scanf ("%d", &opContato);
+            atualizar (agenda, opContato);
+            printf ("Contato atualizado\n");
         } 
     }
     return 0;

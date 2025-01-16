@@ -14,6 +14,17 @@ int main() {
     novo->proximo = inicio; 
     inicio = novo;
     
+    printf ("%d ", *inicio);
+    printf ("%d ", novo->proximo);
+
+    novo->valor = 5;
+    novo->proximo = inicio; 
+    inicio = novo;
+
+    printf ("%d ", *inicio);
+    printf ("%d ", novo->proximo);
+
+
     return 0;
 }
 

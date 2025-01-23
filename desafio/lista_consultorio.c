@@ -17,121 +17,126 @@ typedef struct Medico{
     char nome[100];
     Fila fila; /*aqui eu crio um tipo Fila que está associado a um médico*/
     struct Medico *proximo; 
-}Medico;
+} Medico;
 
-void criar_fila(Fila *fila) { /*crio a fila vazia, aqui, por usar ponteiro, eu posso alterar diretamente os dados da struct fila referenciada pelo ponteiro*/
+void criarFila(Fila *fila) { /*crio a fila vazia, aqui, por usar ponteiro, eu posso alterar diretamente os dados da struct fila referenciada pelo ponteiro*/
     fila->inicio = NULL;
     fila->fim =  NULL;
     fila->totalNormal = 0;
     fila->totalNormal = 0;
 }
-
-void adicionar_elemento(int valor)
-{
-    struct Node *novo_node = (struct Node *)malloc(sizeof(struct Node));
-    novo_node->valor = valor;
-    novo_node->proximo = inicio_da_lista;
-    inicio_da_lista = novo_node;
+Medico *adicionarMedico (Medico **listaMedicos, const char *nome){
+    Medico *novo = (Medico *)malloc(sizeof(Medico));
+    strcpy (novo->nome, nome);
+    criarFila (&novo->fila); 
+    novo->proximo = *listaMedicos;
+    *listaMedicos = novo;
+    return novo;
 }
-
-void adicionar_final(int valor)
-{
-    struct Node *novo_node = (struct Node *)malloc(sizeof(struct Node));
-    novo_node->valor = valor;
-    novo_node->proximo = NULL;
-    if (inicio_da_lista == NULL)
-    {
-        inicio_da_lista = novo_node;
+void adicionarPaciente(Fila *fila, const char *nome, int tipo){
+    if (fila->totalNormal + fila->totalPreferencial >=15){
+        printf("O médico já atingiu o limite diário de 15 pacientes.\n");
+        return;
     }
-    else
-    {
-        struct Node *atual = inicio_da_lista;
-        while (atual->proximo != NULL)
-        {
-            atual = atual->proximo;
-        }
-        atual->proximo = novo_node;
+    Paciente *novo = (Paciente *)malloc(sizeof(Paciente));
+    strcpy (novo->nome, nome);
+    novo->tipo = tipo;
+    novo->proximo = NULL; 
+    if (fila->fim == NULL){
+        fila->inicio = novo;
+    } else {
+        fila->fim->proximo = novo; 
     }
+    fila->fim = novo;
+    if (tipo == 0) {
+        fila->totalNormal++;
+    } else {
+        fila->totalPreferencial++;
+    }
+    printf("Paciente %s, tipo de atendimento %s, foi adicionado à fila.\n", nome, tipo == 0? "Normal" : "Preferencial");
 }
+void removerPaciente(Fila *fila){
+    if (fila->inicio == NULL){
+        printf("A fila está vazia.\n");
+        return;
+    }
+    int contPreferenciais = 0; /*contador de preferenciais atendidos*/
+    Paciente *anterior = NULL;
+    Paciente *atual = fila->inicio; 
 
-void remover_inicio()
-{
-    struct Node *temp = inicio_da_lista;
-    inicio_da_lista = inicio_da_lista->proximo;
-    free(temp);
-}
-
-void remover_elemento(int valor)
-{
-    struct Node *atual = inicio_da_lista;
-    struct Node *anterior = NULL;
-    while (atual != NULL)
-    {
-        if (atual->valor == valor)
-        {
-            if (anterior == NULL)
-            {
-                remover_inicio();
-            }
-            else
-            {
-                anterior->proximo = atual->proximo;
-                free(atual);
-            }
-            return;
+    while (atual != NULL) {
+        if ((contPreferenciais < 2 && atual->tipo == 1) || (contPreferenciais == 2 && atual->tipo == 0)){
+            break;
         }
         anterior = atual;
         atual = atual->proximo;
     }
-}
+    if (atual == NULL) {
+        printf ("Nenhum paciente aguardando atendimento.\n");
+        return;
+    }
+    if (anterior == NULL){
+        fila->inicio = atual->proximo;
+    } else {
+        anterior->proximo = atual->proximo;
+    }
+    if (atual == fila->fim){
+        fila->fim = anterior;
+    }
+    printf("Paciente %s foi atendido/removido da fila.\n", atual->nome);
 
-void remover_final()
-{
-    struct Node *atual = inicio_da_lista;
-    struct Node *anterior = NULL;
-    while (atual->proximo != NULL)
-    {
-        anterior = atual;
-        atual = atual->proximo;
-    }
-    if (anterior == NULL)
-    {
-        inicio_da_lista = NULL;
-    }
-    else
-    {
-        anterior->proximo = NULL;
+    if (atual->tipo == 0){
+        fila->totalNormal--;
+        contPreferenciais = 0; /*reset do contador após atender um normal*/
+    } else {
+        fila->totalPreferencial--;
+        contPreferenciais++;
     }
     free(atual);
 }
-
-void imprimir_lista()
-{
-    struct Node *atual = inicio_da_lista;
-
-    printf(" INICIO --> ");
-    while (atual != NULL)
-    {
-        printf("%d --> ", atual->valor);
+void imprimirFila(Fila *fila){
+    if (fila->inicio == NULL){
+        printf("A fila está vazia.\n");
+        return;
+    }
+    Paciente *atual = fila->inicio;
+    printf("Fila de espera:\n");
+    while (atual != NULL){
+        printf("Nome: %s, Tipo: %d.\n", atual->nome, atual->tipo); 
         atual = atual->proximo;
     }
-    printf(" NULL\n");
 }
-
-int tamanho_da_lista()
-{
-    struct Node *atual = inicio_da_lista;
-    int tamanho = 0;
-    while (atual != NULL)
-    {
-        tamanho++;
+void listarMedicos (Medico *listaMedicos){
+    printf ("Lista de Médicos:\n");
+    int indice = 0;
+    Medico *atual = listaMedicos;
+    while (atual != NULL){
+        printf("[%d] %s\n", indice, atual->nome);
         atual = atual->proximo;
+        indice++;
     }
-    return tamanho;
 }
+Medico *buscarMedico (Medico *listaMedicos, int indice){
+    int contador = 0; 
+    Medico *atual = listaMedicos;
+    while (atual != NULL){
+        if (contador == indice){
+            return atual;
+        }
+        atual = atual->proximo; 
+        contador++;
+    }
+    return NULL; /*vai retornar NULL se o índice não for válido*/
+}
+Medico *criarListaMedicos(){
+    Medico *listaMedicos = NULL; 
+    adicionarMedico(&listaMedicos,"Dr. Potter");
+    adicionarMedico(&listaMedicos,"Dra. Granger");
+    adicionarMedico(&listaMedicos,"Dr. Wislley");
 
-void imprimir_menu()
-{
+    return listaMedicos;
+}
+void imprimir_menu(){
     printf("Escolha uma opção abaixo:\n");
     printf("1. Adicionar paciente\n");
     printf("2. Atender/Remover paciente\n");
@@ -139,15 +144,13 @@ void imprimir_menu()
     printf("4. Sair\n");
 }
 
-int main()
-{
-    criar_lista();
+int main(){
+    Medico *listaMedicos = criarListaMedicos();
     int opcao;
     char nome[100];
     int tipo;
     int indice;
-    while (1)
-    {
+    while (1){
         imprimir_menu();
         scanf("%d", &opcao);
         switch (opcao){
@@ -157,7 +160,7 @@ int main()
             printf("Digite o número correspondendo ao médico desejado: ");
             scanf("%d", &indice);
 
-            Medico *medicoatual = buscarMedico(listaMedicos, indice);
+            Medico *medicoAtual = buscarMedico(listaMedicos, indice);
             if (medicoAtual == NULL) {
                 printf("Opção inválida. Medico não encontrado. Tente novamente.\n");
             } else {

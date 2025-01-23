@@ -157,7 +157,7 @@ int main(){
         case 1:
             printf("Lista de médicos disponível para atendimento: \n");
             listarMedicos(listaMedicos);
-            printf("Digite o número correspondendo ao médico desejado: ");
+            printf("Digite o número correspondente ao médico desejado: ");
             scanf("%d", &indice);
 
             Medico *medicoAtual = buscarMedico(listaMedicos, indice);
@@ -176,7 +176,6 @@ int main(){
             printf("Digite o número correspondendo ao médico desejado: ");
             scanf("%d", &indice);
 
-            Medico *medicoAtual = buscarMedico(listaMedicos, indice);
             if (medicoAtual == NULL) {
                 printf("Opção inválida. Medico não encontrado. Tente novamente.\n");
             } else {
@@ -189,7 +188,6 @@ int main(){
             printf("Digite o número correspondendo ao médico desejado: ");
             scanf("%d", &indice);
 
-            Medico *medicoatual = buscarMedico(listaMedicos, indice);
             if (medicoAtual == NULL) {
                 printf("Opção inválida. Medico não encontrado. Tente novamente.\n");
             } else {

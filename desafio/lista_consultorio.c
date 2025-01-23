@@ -168,7 +168,7 @@ int main(){
                 printf("Opção inválida. Medico não encontrado. Tente novamente.\n");
             } else {
                 printf("Digite o nome do paciente: ");
-                scanf(" %[ˆ\n]", nome);
+                scanf(" %[^\n]", nome);
                 printf("Para atendimento Normal digite 0, para Preferencial digite 1: ");
                 scanf("%d, &tipo");
             }

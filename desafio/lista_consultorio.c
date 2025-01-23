@@ -2,9 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-int preferenciaisAtendidos = 0; 
-int normaisAtendidos = 0;
-
 typedef struct Paciente {
     char nome[100];
     int tipo; /*0 para normal e 1 para preferencial*/
@@ -19,7 +16,8 @@ typedef struct Fila {
 typedef struct Medico{
     char nome[100];
     Fila fila; /*aqui eu crio um tipo Fila que está associado a um médico*/
-    struct Medico *proximo; 
+    struct Medico *proximo;
+    int contPreferenciais;
 } Medico;
 
 void criarFila(Fila *fila) { /*crio a fila vazia, aqui, por usar ponteiro, eu posso alterar diretamente os dados da struct fila referenciada pelo ponteiro*/
@@ -50,16 +48,16 @@ void adicionarPaciente(Fila *fila, const char *nome, int tipo){
     }
     printf("Paciente %s, tipo de atendimento %s, foi adicionado à fila.\n", nome, tipo == 0? "Normal" : "Preferencial");
 }
-void removerPaciente(Fila *fila){
+void removerPaciente(Fila *fila, Medico *medicoAtual){
     if (fila->inicio == NULL){
         printf("A fila está vazia.\n");
         return;
     }
-    static int contPreferenciais = 0;
+   ;
     Paciente *anterior = NULL;
     Paciente *atual = fila->inicio;
 
-    int tipopPeferencial = (contPreferenciais < 2) ? 1 : 0;
+    int tipopPeferencial = (medicoAtual->contPreferenciais < 2) ? 1 : 0;
 
     while (atual != NULL) {
         if (atual->tipo == tipopPeferencial){
@@ -81,10 +79,10 @@ void removerPaciente(Fila *fila){
         
         if (atual->tipo == 0){
             fila->totalNormal--;
-            contPreferenciais = 0; 
+            medicoAtual->contPreferenciais = 0; 
         } else {
             fila->totalPreferencial--;
-            contPreferenciais++;
+            medicoAtual->contPreferenciais++;
         }
     free(atual);
 }
@@ -188,7 +186,7 @@ int main(){
             if (medicoAtualRemover == NULL) {
                 printf("Opção inválida. Medico não encontrado. Tente novamente.\n");
             } else {
-                removerPaciente(&medicoAtualRemover->fila);
+                removerPaciente(&medicoAtualRemover->fila, medicoAtualRemover);
             }
             break;
         case 3:

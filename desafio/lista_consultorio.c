@@ -176,7 +176,7 @@ int main(){
             printf("Digite o número correspondendo ao médico desejado: ");
             scanf("%d", &indice);
 
-            Medico *medicoatual = buscarMedico(listaMedicos, indice);
+            Medico *medicoAtual = buscarMedico(listaMedicos, indice);
             if (medicoAtual == NULL) {
                 printf("Opção inválida. Medico não encontrado. Tente novamente.\n");
             } else {

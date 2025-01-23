@@ -23,7 +23,7 @@ void criarFila(Fila *fila) { /*crio a fila vazia, aqui, por usar ponteiro, eu po
     fila->inicio = NULL;
     fila->fim =  NULL;
     fila->totalNormal = 0;
-    fila->totalNormal = 0;
+    fila->totalPreferencial = 0;
 }
 Medico *adicionarMedico (Medico **listaMedicos, const char *nome){
     Medico *novo = (Medico *)malloc(sizeof(Medico));
@@ -65,8 +65,11 @@ void removerPaciente(Fila *fila){
     Paciente *atual = fila->inicio; 
 
     while (atual != NULL) {
-        if ((contPreferenciais < 2 && atual->tipo == 1) || (contPreferenciais == 2 && atual->tipo == 0)){
+        if (contPreferenciais < 2 && atual->tipo == 1){
             break;
+        }
+        if (contPreferenciais == 2 && atual->tipo == 0){
+            break; 
         }
         anterior = atual;
         atual = atual->proximo;
@@ -152,7 +155,6 @@ int main(){
     int tipo;
     int indice;
 
-    Medico *medicoAtual = buscarMedico(listaMedicos, indice);
     while (1){
         imprimir_menu();
         scanf("%d", &opcao);
@@ -163,14 +165,16 @@ int main(){
             printf("Digite o número correspondente ao médico desejado: ");
             scanf("%d", &indice);
 
-
+            Medico *medicoAtual = buscarMedico(listaMedicos, indice);
+            
             if (medicoAtual == NULL) {
                 printf("Opção inválida. Medico não encontrado. Tente novamente.\n");
             } else {
                 printf("Digite o nome do paciente: ");
                 scanf(" %[^\n]", nome);
                 printf("Para atendimento Normal digite 0, para Preferencial digite 1: ");
-                scanf("%d, &tipo");
+                scanf("%d", &tipo);
+                adicionarPaciente(&medicoAtual->fila, nome, tipo);
             }
             break;
         case 2:
@@ -179,10 +183,12 @@ int main(){
             printf("Digite o número correspondendo ao médico desejado: ");
             scanf("%d", &indice);
 
-            if (medicoAtual == NULL) {
+            Medico *medicoAtualRemover = buscarMedico(listaMedicos, indice);
+
+            if (medicoAtualRemover == NULL) {
                 printf("Opção inválida. Medico não encontrado. Tente novamente.\n");
             } else {
-                removerPaciente(&medicoAtual->fila);
+                removerPaciente(&medicoAtualRemover->fila);
             }
             break;
         case 3:
@@ -191,10 +197,12 @@ int main(){
             printf("Digite o número correspondendo ao médico desejado: ");
             scanf("%d", &indice);
 
-            if (medicoAtual == NULL) {
+            Medico *medicoAtualImprimir = buscarMedico(listaMedicos, indice); 
+
+            if (medicoAtualImprimir == NULL) {
                 printf("Opção inválida. Medico não encontrado. Tente novamente.\n");
             } else {
-                imprimirFila(&medicoAtual->fila);
+                imprimirFila(&medicoAtualImprimir->fila);
             }
             break;
         case 4:

@@ -55,20 +55,19 @@ void adicionarPaciente(Fila *fila, const char *nome, int tipo){
     }
     printf("Paciente %s, tipo de atendimento %s, foi adicionado à fila.\n", nome, tipo == 0? "Normal" : "Preferencial");
 }
-void removerPaciente(Fila *fila){
+void removerPaciente(Fila *fila, int *contPreferenciais){
     if (fila->inicio == NULL){
         printf("A fila está vazia.\n");
         return;
     }
-    int contPreferenciais = 0; /*contador de preferenciais atendidos*/
     Paciente *anterior = NULL;
     Paciente *atual = fila->inicio; 
 
     while (atual != NULL) {
-        if (contPreferenciais < 2 && atual->tipo == 1){
+        if (*contPreferenciais < 2 && atual->tipo == 1){
             break;
         }
-        if (contPreferenciais == 2 && atual->tipo == 0){
+        if (*contPreferenciais == 2 && atual->tipo == 0){
             break; 
         }
         anterior = atual;
@@ -90,10 +89,10 @@ void removerPaciente(Fila *fila){
 
     if (atual->tipo == 0){
         fila->totalNormal--;
-        contPreferenciais = 0; /*reset do contador após atender um normal*/
+        *contPreferenciais = 0; /*reset do contador após atender um normal*/
     } else {
         fila->totalPreferencial--;
-        contPreferenciais++;
+        *contPreferenciais++;
     }
     free(atual);
 }
@@ -149,7 +148,7 @@ void imprimir_menu(){
 
 int main(){
     Medico *listaMedicos = criarListaMedicos();
-   
+    int contPreferenciais = 0; /*contador de preferenciais atendidos*/
     int opcao;
     char nome[100];
     int tipo;
@@ -188,7 +187,7 @@ int main(){
             if (medicoAtualRemover == NULL) {
                 printf("Opção inválida. Medico não encontrado. Tente novamente.\n");
             } else {
-                removerPaciente(&medicoAtualRemover->fila);
+                removerPaciente(&medicoAtualRemover->fila, &contPreferenciais);
             }
             break;
         case 3:

@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+int preferenciaisAtendidos = 0; 
+int normaisAtendidos = 0;
+
 typedef struct Paciente {
     char nome[100];
     int tipo; /*0 para normal e 1 para preferencial*/
@@ -55,51 +58,46 @@ void adicionarPaciente(Fila *fila, const char *nome, int tipo){
     }
     printf("Paciente %s, tipo de atendimento %s, foi adicionado à fila.\n", nome, tipo == 0? "Normal" : "Preferencial");
 }
-void removerPaciente(Fila *fila, int *contPreferenciais){
+void removerPaciente(Fila *fila){
     if (fila->inicio == NULL){
         printf("A fila está vazia.\n");
         return;
     }
     Paciente *anterior = NULL;
     Paciente *atual = fila->inicio;
-    int preferenciaisAtendidos = 0;  
 
     while (atual != NULL) {
         if (preferenciaisAtendidos < 2 && atual->tipo == 1){
             preferenciaisAtendidos++;
-            break;
+            fila->totalPreferencial--;
+            printf("Paciente preferencial %s foi atendido/removido da fila.\n", atual->nome);
+            anterior = atual;
+            atual = atual->proximo;
+            free(anterior);
         }
-        if (preferenciaisAtendidos == 2 && atual->tipo == 0){
-            break; 
+        else if (preferenciaisAtendidos == 2 && atual->tipo == 0){
+            normaisAtendidos++;
+            preferenciaisAtendidos = 0;
+            printf("Paciente normal %s foi atendido/removido da fila.\n", atual->nome);
+            anterior = atual;
+            atual = atual->proximo;
+            free(anterior); 
         }
-        anterior = atual;
-        atual = atual->proximo;
-    }
-    if (atual == NULL) {
-        printf ("Nenhum paciente aguardando atendimento.\n");
-        return;
-    }
-    if (anterior == NULL){
-        fila->inicio = atual->proximo;
-    } else {
-        anterior->proximo = atual->proximo;
-    }
-    if (atual == fila->fim){
-        fila->fim = anterior;
-    }
-    printf("Paciente %s foi atendido/removido da fila.\n", atual->nome);
-
-    if (atual->tipo == 0){
-        fila->totalNormal--;
-        preferenciaisAtendidos = 0; /*reset do contador após atender um normal*/
-    } else {
-        fila->totalPreferencial--;
-        *contPreferenciais++;
-        if (*contPreferenciais == 2){
-            *contPreferenciais = 0; 
+        else if (normaisAtendidos == 1 && atual->tipo == 1){
+            preferenciaisAtendidos++;
+            normaisAtendidos = 0; 
+            printf("Paciente preferencial %s foi atendido/removido da fila.\n", atual->nome);
+            anterior = atual;
+            atual = atual->proximo;
+            free(anterior); 
+        }
+        else if (fila->totalPreferencial == 0 && atual->tipo == 0){
+            normaisAtendidos++;
+            anterior = atual;
+            atual = atual->proximo;
+            free(anterior);  
         }
     }
-    free(atual);
 }
 void imprimirFila(Fila *fila){
     if (fila->inicio == NULL){
@@ -192,7 +190,7 @@ int main(){
             if (medicoAtualRemover == NULL) {
                 printf("Opção inválida. Medico não encontrado. Tente novamente.\n");
             } else {
-                removerPaciente(&medicoAtualRemover->fila, &contPreferenciais);
+                removerPaciente(&medicoAtualRemover->fila);
             }
             break;
         case 3:

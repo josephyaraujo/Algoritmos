@@ -146,10 +146,13 @@ void imprimir_menu(){
 
 int main(){
     Medico *listaMedicos = criarListaMedicos();
+   
     int opcao;
     char nome[100];
     int tipo;
     int indice;
+
+    Medico *medicoAtual = buscarMedico(listaMedicos, indice);
     while (1){
         imprimir_menu();
         scanf("%d", &opcao);
@@ -160,7 +163,7 @@ int main(){
             printf("Digite o número correspondente ao médico desejado: ");
             scanf("%d", &indice);
 
-            Medico *medicoAtual = buscarMedico(listaMedicos, indice);
+
             if (medicoAtual == NULL) {
                 printf("Opção inválida. Medico não encontrado. Tente novamente.\n");
             } else {

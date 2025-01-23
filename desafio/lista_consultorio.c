@@ -61,13 +61,15 @@ void removerPaciente(Fila *fila, int *contPreferenciais){
         return;
     }
     Paciente *anterior = NULL;
-    Paciente *atual = fila->inicio; 
+    Paciente *atual = fila->inicio;
+    int preferenciaisAtendidos = 0;  
 
     while (atual != NULL) {
-        if (*contPreferenciais < 2 && atual->tipo == 1){
+        if (preferenciaisAtendidos < 2 && atual->tipo == 1){
+            preferenciaisAtendidos++;
             break;
         }
-        if (*contPreferenciais == 2 && atual->tipo == 0){
+        if (preferenciaisAtendidos == 2 && atual->tipo == 0){
             break; 
         }
         anterior = atual;
@@ -89,10 +91,13 @@ void removerPaciente(Fila *fila, int *contPreferenciais){
 
     if (atual->tipo == 0){
         fila->totalNormal--;
-        *contPreferenciais = 0; /*reset do contador após atender um normal*/
+        preferenciaisAtendidos = 0; /*reset do contador após atender um normal*/
     } else {
         fila->totalPreferencial--;
         *contPreferenciais++;
+        if (*contPreferenciais == 2){
+            *contPreferenciais = 0; 
+        }
     }
     free(atual);
 }

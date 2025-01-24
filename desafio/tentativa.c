@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+int contPreferenciais = 0;
+    int contNormal = 0;
 
 typedef struct Paciente {
     char nome[100];
@@ -17,8 +19,7 @@ typedef struct Medico{
     char nome[100];
     Fila fila; /*aqui eu crio um tipo Fila que está associado a um médico*/
     struct Medico *proximo;
-    int contPreferenciais;
-    int contNormal;
+    
 } Medico;
 
 void criarFila(Fila *fila) { /*crio a fila vazia, aqui, por usar ponteiro, eu posso alterar diretamente os dados da struct fila referenciada pelo ponteiro*/
@@ -85,7 +86,7 @@ void remover_inicio(Medico *medicoAtual) {
     }
     free(atual);
 }
-void atenderPaciente(Fila *fila, Medico *medicoAtual){
+void atenderPaciente(Fila *fila, *contPreferenciais, *){
     Paciente *atual = medicoAtual->fila.inicio;
     while (atual != NULL){
         if (medicoAtual->contPreferenciais < 2 && atual->tipo == 1){

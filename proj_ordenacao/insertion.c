@@ -45,7 +45,7 @@ int *lerArrayDoArquivo(const char *nomeArquivo, int *n){
 }
 int main(){
     int n;
-    int* arr = lerArrayDoArquivo("dados.txt", &n);
+    int* arr = lerArrayDoArquivo("100000Numeros.txt", &n);
 
     clock_t inicio = clock();
 
@@ -54,7 +54,7 @@ int main(){
     clock_t fim = clock();
 
     double tempoGasto = (double)(fim - inicio) * 1000 / CLOCKS_PER_SEC;
-    printf("Tempo de execução: %.5f milissegundos\n", tempoGasto);
+    printf("Tempo de execução: %.2f milissegundos\n", tempoGasto);
 
     free(arr);
 

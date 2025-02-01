@@ -11,22 +11,17 @@ void selectionSort(int arr[], int n) { /*Funcao para ordenar o array usando o al
         int menor_indice = i; /*A gente assume que o menor elemento esta ocupando a posição atual (i).
                               Fazemos isso antes de entrar no laço interno para termos um ponto de partida
                               para as comparações que se sucederão.*/
-        
-        // Iterate through the unsorted portion
-        // to find the actual minimum
         for (int j = i + 1; j < n; j++) { /*Esse laço mais interno é usado pra percorrer os elementos restantes, por isso
                                           o j começa em i+1 (e vai até n), pq ele vai comparar o elemento na posição i com o seu seguinte
                                           na posição j, para verificar se é menor ou não, caso seja o menor_indice é atualizado.*/
             if (arr[j] < arr[menor_indice]) { /*Nesse if que é feita essa comparação.*/
-                menor_indice = j; /*E aqui é feita a atualização no novo menor_indice. Logo, após o fim do laço interno*/
+                menor_indice = j; /*E aqui é feita a atualização do novo menor_indice.*/
             }
         }
-        
-        // Move minimum element to its
-        // correct position
-        int temp = arr[i];
-        arr[i] = arr[menor_indice];
-        arr[menor_indice] = temp;
+                            /*Logo, após o fim do laço interno quando o medor_indice já está atualizado, procedemos com a troca*/
+        int temp = arr[i];  /*caso o menor indice seja diferente de i. Armazenamos temporariamente o valoir do indice i em temp.*/
+        arr[i] = arr[menor_indice]; /*atribuimos a i o valor do menor indice, para que ele ocupe a posicao correta*/
+        arr[menor_indice] = temp; /*e atribuimos ao menor indice o valor de i, mudando a posicao de i para a posicao de onde veio o menor índice atualizado.*/
     }
 }
 int *lerArrayDoArquivo(const char *filename, int *n){ /*essa funcao sera responsavel por ler os números do arquivo e retornar o array e seu tamanho*/

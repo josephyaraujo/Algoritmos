@@ -53,22 +53,20 @@ int *lerArrayDoArquivo(const char *filename, int *n){ /*essa funcao sera respons
     *n = contador;
     return arr;
 }
-
 int main(){
     int n;
     int *arr = lerArrayDoArquivo("100Numeros.txt", &n); /*leitura dos numeros do arquivo txt*/
 
     clock_t inicio = clock(); /*funcao para medir o tempo de execucao*/
 
-    bubbleSort(arr, n); /*ordena o array usando bubble sort*/
+    selectionSort(arr, n); /*ordena o array usando bubble sort*/
 
     clock_t fim = clock();
 
     /*calculo e impressao do tempo de execução*/ 
     double tempoGasto = (double)(fim - inicio) *1000 / CLOCKS_PER_SEC;
     printf("Tempo de execução: %.2f milissegundos\n", tempoGasto);
-
-    // Libera a memória alocada para o array
+    /*Libera a memória alocada para o array*/
     free(arr);
 
     return 0;

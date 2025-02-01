@@ -2,28 +2,31 @@
 #include <stdlib.h>
 #include <time.h>
 
-void selectionSort(int arr[], int n) {
-    for (int i = 0; i < n - 1; i++) {
-      
-        // Assume the current position holds
-        // the minimum element
-        int min_idx = i;
+void selectionSort(int arr[], int n) { /*Funcao para ordenar o array usando o algoritmo de ordenacao por selecao. Recebe o array (arr[]) e o numero de elementos dele (n).*/
+    for (int i = 0; i < n - 1; i++) { /*Esse laço mais externo vai percorrer os elementos do array até o penúltimo (n-1)
+                                      isso porque como o selection ordena através da seleção do menor valor da parte não ordenada
+                                      e troca esse valor com o elemento que esta ocupando a posição correta desse valor selecionado,
+                                      e como isso acontece a cada iteração, o últimi elemento (n) não precisa ser comparado, considerando
+                                      que ele é o último justamente por ser o maior.*/
+        int menor_indice = i; /*A gente assume que o menor elemento esta ocupando a posição atual (i).
+                              Fazemos isso antes de entrar no laço interno para termos um ponto de partida
+                              para as comparações que se sucederão.*/
         
         // Iterate through the unsorted portion
         // to find the actual minimum
-        for (int j = i + 1; j < n; j++) {
-            if (arr[j] < arr[min_idx]) {
-              
-                // Update min_idx if a smaller element is found
-                min_idx = j;
+        for (int j = i + 1; j < n; j++) { /*Esse laço mais interno é usado pra percorrer os elementos restantes, por isso
+                                          o j começa em i+1 (e vai até n), pq ele vai comparar o elemento na posição i com o seu seguinte
+                                          na posição j, para verificar se é menor ou não, caso seja o menor_indice é atualizado.*/
+            if (arr[j] < arr[menor_indice]) { /*Nesse if que é feita essa comparação.*/
+                menor_indice = j; /*E aqui é feita a atualização no novo menor_indice. Logo, após o fim do laço interno*/
             }
         }
         
         // Move minimum element to its
         // correct position
         int temp = arr[i];
-        arr[i] = arr[min_idx];
-        arr[min_idx] = temp;
+        arr[i] = arr[menor_indice];
+        arr[menor_indice] = temp;
     }
 }
 int *lerArrayDoArquivo(const char *filename, int *n){ /*essa funcao sera responsavel por ler os números do arquivo e retornar o array e seu tamanho*/

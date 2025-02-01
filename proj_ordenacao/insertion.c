@@ -15,8 +15,8 @@ void insertionSort(int arr[], int n) { /*Funcao para ordenar o array usando o al
         arr[j + 1] = valorAtual;  /*Insere o elemento do valorAtual na posicaoo correta da ordenacao*/
     }
 }
-int *lerArrayDoArquivo(const char *nomeArquivo, int *n){
-    FILE *arquivo = fopen(nomeArquivo, "r");
+int *lerArrayDoArquivo(const char *filename, int *n){
+    FILE *arquivo = fopen(filename, "r");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo\n");
         exit(1);
@@ -27,8 +27,7 @@ int *lerArrayDoArquivo(const char *nomeArquivo, int *n){
         contador++;
     }
     rewind(arquivo);
-    
-    int *arr = (int*)malloc(contador *sizeof(int));
+      int *arr = (int*)malloc(contador *sizeof(int));
     if (arr == NULL) {
         printf("Erro ao alocar memória\n");
         exit(1);
@@ -45,7 +44,7 @@ int *lerArrayDoArquivo(const char *nomeArquivo, int *n){
 }
 int main(){
     int n;
-    int* arr = lerArrayDoArquivo("100Numeros.txt", &n);
+    int *arr = lerArrayDoArquivo("100Numeros.txt", &n);
 
     clock_t inicio = clock();
 
@@ -60,3 +59,4 @@ int main(){
 
     return 0;  
 }
+/*Referência: https://www.geeksforgeeks.org/insertion-sort-algorithm/*/

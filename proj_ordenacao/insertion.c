@@ -45,7 +45,7 @@ int *lerArrayDoArquivo(const char *nomeArquivo, int *n){
 }
 int main(){
     int n;
-    int* arr = lerArrayDoArquivo("1000000Numeros.txt", &n);
+    int* arr = lerArrayDoArquivo("100Numeros.txt", &n);
 
     clock_t inicio = clock();
 

@@ -1,27 +1,29 @@
 #include <stdio.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <time.h>
 
-void trocar(int *a, int *b){ /*funcao responsavel pela troca de posicao de dois numeros no array*/
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-void bubbleSort(int arr[], int n){ /*ordena o array usando bubble sort, recebendo o array (arr) e o tamanho desse array (n)*/
-    int i, j;
-    bool troca; /*essa variavel booleana eh usada para verificar se houve ou nao trocas na iteracao interna do array*/
-    for (i = 0; i < n - 1; i++) {  /*esse laco vai servir para controlar as passagens do algoritmo*/
-        troca = false; /*se nao tiver havido troca, o algoritmo eh interrompido para nao ser usado desnecessariamente*/
-        for (j = 0; j < n - i - 1; j++) { /*ja esse segudo vai comparar cada elemento com o seu proximo, caso o anterior seja maior que o proximo, eh feita a troca de posicao*/
-            if (arr[j] > arr[j + 1]) { 
-                trocar(&arr[j], &arr[j + 1]); 
-                troca = true;
+void selectionSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+      
+        // Assume the current position holds
+        // the minimum element
+        int min_idx = i;
+        
+        // Iterate through the unsorted portion
+        // to find the actual minimum
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] < arr[min_idx]) {
+              
+                // Update min_idx if a smaller element is found
+                min_idx = j;
             }
         }
-        if (troca == false) /*essa verificacao serve para interromper a execucao do algoritmo caso o array ja esteja ordenado*/ 
-            break;
+        
+        // Move minimum element to its
+        // correct position
+        int temp = arr[i];
+        arr[i] = arr[min_idx];
+        arr[min_idx] = temp;
     }
 }
 int *lerArrayDoArquivo(const char *filename, int *n){ /*essa funcao sera responsavel por ler os números do arquivo e retornar o array e seu tamanho*/
@@ -47,7 +49,7 @@ int *lerArrayDoArquivo(const char *filename, int *n){ /*essa funcao sera respons
     while (fscanf(arquivo, "%d", &arr[i]) != EOF) {  /*aqui os numeros do arquivo serao lidos novamente e armazenados no array criado na funcao acima dessa*/
         i++;
     }
-  fclose(arquivo); /*para fechar o arquivo pos leitura*/
+    fclose(arquivo); /*para fechar o arquivo pos leitura*/
 
     /*Retorna o array e o tamanho*/ 
     *n = contador;
@@ -74,4 +76,4 @@ int main(){
     return 0;
 }
 
-/*Referência: https://www.geeksforgeeks.org/bubble-sort-algorithm/*/
+/*Referência: https://www.geeksforgeeks.org/selection-sort-algorithm-2/*/

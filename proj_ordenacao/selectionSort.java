@@ -7,7 +7,7 @@ import java.io.FileReader;
 public class selectionSort{
     public static void main(String[] args){
         List<Integer> lista = new ArrayList<>(); //Criação da lista para guardar os valores
-        try(BufferedReader br = new BufferedReader(new FileReader("100Numeros.txt"))){ //leitura do arquivo
+        try(BufferedReader br = new BufferedReader(new FileReader("/workspaces/Aulas_Algoritmos/proj_ordenacao/1000000Numeros.txt"))){ //leitura do arquivo
             String line = br.readLine(); //linha por linha
             while (line != null){
                 lista.add(Integer.parseInt(line)); //guarda linha na lista transformando para inteiro

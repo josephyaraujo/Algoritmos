@@ -52,7 +52,7 @@ public class mergeSort{
 
     public static void main(String[] args){
         List<Integer> lista = new ArrayList<>();
-        try(BufferedReader br = new BufferedReader(new FileReader("100Numeros.txt"))){ //leitura do arquivo
+        try(BufferedReader br = new BufferedReader(new FileReader("/workspaces/Aulas_Algoritmos/proj_ordenacao/100Numeros.txt"))){ //leitura do arquivo
             String line = br.readLine(); //linha por linha
             
             while (line != null){
@@ -66,9 +66,7 @@ public class mergeSort{
             sort(array, 0, array.length - 1); //Primeira chamada do merge Sort
 
             System.out.print("tempo de execução:" + (System.currentTimeMillis() - tempoInicial) + " milisegundos \n"); 
-            for (int i = 0; i < array.length; i++){
-                System.out.println(array[i]);
-            }
+            
         } catch (IOException e){
             System.err.println("Erro ao ler o arquivo: " + e.getMessage());
         }

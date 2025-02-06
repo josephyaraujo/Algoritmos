@@ -52,7 +52,7 @@ public class mergeSort{
 
     public static void main(String[] args){
         List<Integer> lista = new ArrayList<>();
-        try(BufferedReader br = new BufferedReader(new FileReader(args[0]))){ //leitura do arquivo
+        try(BufferedReader br = new BufferedReader(new FileReader("100Numeros.txt"))){ //leitura do arquivo
             String line = br.readLine(); //linha por linha
             
             while (line != null){

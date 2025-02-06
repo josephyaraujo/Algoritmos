@@ -2,41 +2,41 @@
 #include <stdlib.h>
 #include <time.h>
 
-void merge(int a[], int i1, int j1, int i2, int j2) {
+void merge(int arr[], int i1, int j1, int i2, int j2) {
     int size = (j1 - i1 + 1) + (j2 - i2 + 1);
     int *arrayTemp = (int *)malloc(size * sizeof(int));
     int i = i1, j = i2, k = 0;
 
     while (i <= j1 && j <= j2) {
-        if (a[i] < a[j]) {
-            arrayTemp[k++] = a[i++];
+        if (arr[i] < arr[j]) {
+            arrayTemp[k++] = arr[i++];
         } else {
-            arrayTemp[k++] = a[j++];
+            arrayTemp[k++] = arr[j++];
         }
     }
 
     while (i <= j1) {
-        arrayTemp[k++] = a[i++];
+        arrayTemp[k++] = arr[i++];
     }
 
     while (j <= j2) {
-        arrayTemp[k++] = a[j++];
+        arrayTemp[k++] = arr[j++];
     }
 
     for (i = i1, j = 0; i <= j2; i++, j++) {
-        a[i] = arrayTemp[j];
+        arr[i] = arrayTemp[j];
     }
 
     free(arrayTemp);
 }
 
-void sort(int a[], int primeiro, int ultimo) {
+void sort(int arr[], int primeiro, int ultimo) {
     int meio;
     if (primeiro < ultimo) {
         meio = (primeiro + ultimo) / 2;
-        sort(a, primeiro, meio);
-        sort(a, meio + 1, ultimo);
-        merge(a, primeiro, meio, meio + 1, ultimo);
+        sort(arr, primeiro, meio);
+        sort(arr, meio + 1, ultimo);
+        merge(arr, primeiro, meio, meio + 1, ultimo);
     }
 }
 int *lerArrayDoArquivo(const char *filename, int *n){ /*essa funcao sera responsavel por ler os números do arquivo e retornar o array e seu tamanho*/

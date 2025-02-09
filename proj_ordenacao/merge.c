@@ -4,13 +4,13 @@
 /*A função merge será responsável por mesclar os dois sub-arrays ordenados, classificando-os em um único array. Ela recebe
 o array arr[], além dos índice i e j do primeiro e segundo sub-arrays.*/
 void merge(int arr[], int i1, int j1, int i2, int j2) { 
-    int size = (j1 - i1 + 1) + (j2 - i2 + 1); /*Esta varivável vai calcular o tamanho de elementos a serem mesclados,
-                                considerenando tanto o a quantidades de elementos do intervalo 1, quando do intervalo 2.
+    int size = (j1 - i1 + 1) + (j2 - i2 + 1); /*Esta variável vai calcular o tamanho de elementos a serem mesclados,
+                                considerenando tanto o a quantidades de elementos do intervalo 1, quanto do intervalo 2.
                                 É somado +1 para garantir a inclusão de todos os elementos do sub-array e não apenas a 
                                 diferença entre um e outro*/
     int *arrayTemp = (int *)malloc(size * sizeof(int)); /*Alocação de memória para o array temporário, baseado no tamanho 
                                 obtido com a soma dos dois intervalos (variável size).*/
-    int i = i1, j = i2, k = 0; /*Inicialização de i e j para os loços, sendo i o início do primeiro sub-array (i1) e 
+    int i = i1, j = i2, k = 0; /*Inicialização de i e j para os laços, sendo i o início do primeiro sub-array (i1) e 
                                 j o início do segundo sub-array (i2). O k serve como um contador que irá controlar o índice
                                 dentro desse array tempoário*/
 /*Nesse primeiro while é onde de fato se inicia a mesclagem dos elementos em ordem crescente. Aqui é feita a comparação 
@@ -33,21 +33,21 @@ dois while. Esse segundo while referenre ao primeiro sub-array e o terceiro whil
         arrayTemp[k++] = arr[j++];
     }
 /*Com o processo de mesclagem já concluído, o próximo laço irá fazer uma cópia dos elementos do array temporárrio (já 
-ordenador), percorrendo este array elemento por elemento, e adicionando-os no o array original, de forma a garantir que, 
+ordenado), percorrendo este array elemento por elemento, e adicionando-os no o array original, de forma a garantir que, 
 a ordenação seja preservada*/
     for (i = i1, j = 0; i <= j2; i++, j++) {
         arr[i] = arrayTemp[j];
     }
     free(arrayTemp); /*Liberação do espaço de memória alocado para o array temporário*/
 }
-/*Na função sort é onde ocorre a recursividade. Aqui o array original será dividio e a função merge será chamada para 
+/*Na função sort é onde ocorre a recursividade. Aqui o array original será divido e a função merge será chamada para 
 proceder com a ordenação das partes.*/
 void sort(int arr[], int primeiro, int ultimo) {
     int meio;
     if (primeiro < ultimo) { /*Checa se o array tem mais de um elemento para ordenar, caso contrário, retorna.*/
         meio = (primeiro + ultimo) / 2; /*O array é então dividio ao meio e a variável meio é o índice central entre 
                                         o primeiro e o último elemento do aray*/
-        /*A partir daqui a função  sort é chamda recursivamente para ordenar as duas metades do array, inciando pelo 
+        /*A partir daqui a função  sort é chamada recursivamente para ordenar as duas metades do array, inciando pelo 
         primeiro intervalo (do primeiro elemento ao central/meio) e depois o segundo intervalo (do elemento seguinte 
         ao elemento central até o último elemento)*/
         sort(arr, primeiro, meio); 

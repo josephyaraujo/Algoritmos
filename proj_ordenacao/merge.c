@@ -87,7 +87,7 @@ int *lerArrayDoArquivo(const char *filename, int *n){ /*essa funcao sera respons
 }
 int main(){
     int n;
-    int *arr = lerArrayDoArquivo("100Numeros.txt", &n); /*leitura dos numeros do arquivo txt*/
+    int *arr = lerArrayDoArquivo("1000000Numeros.txt", &n); /*leitura dos numeros do arquivo txt*/
 
     clock_t inicio = clock(); /*funcao para medir o tempo de execucao*/
 

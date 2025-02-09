@@ -40,12 +40,19 @@ a ordenação seja preservada*/
     }
     free(arrayTemp); /*Liberação do espaço de memória alocado para o array temporário*/
 }
+/*Na função sort é onde ocorre a recursividade. Aqui o array original será dividio e a função merge será chamada para 
+proceder com a ordenação das partes.*/
 void sort(int arr[], int primeiro, int ultimo) {
     int meio;
-    if (primeiro < ultimo) {
-        meio = (primeiro + ultimo) / 2;
-        sort(arr, primeiro, meio);
+    if (primeiro < ultimo) { /*Checa se o array tem mais de um elemento para ordenar, caso contrário, retorna.*/
+        meio = (primeiro + ultimo) / 2; /*O array é então dividio ao meio e a variável meio é o índice central entre 
+                                        o primeiro e o último elemento do aray*/
+        /*A partir daqui a função  sort é chamda recursivamente para ordenar as duas metades do array, inciando pelo 
+        primeiro intervalo (do primeiro elemento ao central/meio) e depois o segundo intervalo (do elemento seguinte 
+        ao elemento central até o último elemento)*/
+        sort(arr, primeiro, meio); 
         sort(arr, meio + 1, ultimo);
+        /*Em seguida a ordencação, a funcão merge é chamada para mescalar as duas metades de forma ordenada.*/
         merge(arr, primeiro, meio, meio + 1, ultimo);
     }
 }

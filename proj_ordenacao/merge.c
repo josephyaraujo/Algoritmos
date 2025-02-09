@@ -1,35 +1,45 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
-void merge(int arr[], int i1, int j1, int i2, int j2) {
-    int size = (j1 - i1 + 1) + (j2 - i2 + 1);
-    int *arrayTemp = (int *)malloc(size * sizeof(int));
-    int i = i1, j = i2, k = 0;
-
-    while (i <= j1 && j <= j2) {
+/*A função merge será responsável por mesclar os dois sub-arrays ordenados, classificando-os em um único array. Ela recebe
+o array arr[], além dos índice i e j do primeiro e segundo sub-arrays.*/
+void merge(int arr[], int i1, int j1, int i2, int j2) { 
+    int size = (j1 - i1 + 1) + (j2 - i2 + 1); /*Esta varivável vai calcular o tamanho de elementos a serem mesclados,
+                                considerenando tanto o a quantidades de elementos do intervalo 1, quando do intervalo 2.
+                                É somado +1 para garantir a inclusão de todos os elementos do sub-array e não apenas a 
+                                diferença entre um e outro*/
+    int *arrayTemp = (int *)malloc(size * sizeof(int)); /*Alocação de memória para o array temporário, baseado no tamanho 
+                                obtido com a soma dos dois intervalos (variável size).*/
+    int i = i1, j = i2, k = 0; /*Inicialização de i e j para os loços, sendo i o início do primeiro sub-array (i1) e 
+                                j o início do segundo sub-array (i2). O k serve como um contador que irá controlar o índice
+                                dentro desse array tempoário*/
+/*Nesse primeiro while é onde de fato se inicia a mesclagem dos elementos em ordem crescente. Aqui é feita a comparação 
+entre os elementos dos dois sub-arrays (arr[i] e arr[j]) enquanto os elementos estejam dentro do limite de cada sub-array.
+O elemento de menor valor é adicioado ao array temporário e o índice (seja i ou j) é incrementado.*/
+    while (i <= j1 && j <= j2) { 
         if (arr[i] < arr[j]) {
             arrayTemp[k++] = arr[i++];
         } else {
             arrayTemp[k++] = arr[j++];
         }
     }
-
+/*Após esse primeiro laço, caso algum dos sub-arrays já tenha sido completamente percorrido e ainda hajam elementos que, 
+apesar de ordenados, precisem ainda serem adicionados ao array temporário, esse processo será excutado pelos proxímos 
+dois while. Esse segundo while referenre ao primeiro sub-array e o terceiro while referenre ao segundo sub-array.*/
     while (i <= j1) {
         arrayTemp[k++] = arr[i++];
     }
-
     while (j <= j2) {
         arrayTemp[k++] = arr[j++];
     }
-
+/*Com o processo de mesclagem já concluído, o próximo laço irá fazer uma cópia dos elementos do array temporárrio (já 
+ordenador), percorrendo este array elemento por elemento, e adicionando-os no o array original, de forma a garantir que, 
+a ordenação seja preservada*/
     for (i = i1, j = 0; i <= j2; i++, j++) {
         arr[i] = arrayTemp[j];
     }
-
-    free(arrayTemp);
+    free(arrayTemp); /*Liberação do espaço de memória alocado para o array temporário*/
 }
-
 void sort(int arr[], int primeiro, int ultimo) {
     int meio;
     if (primeiro < ultimo) {

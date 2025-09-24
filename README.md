@@ -1,1 +1,2 @@
-# Aulas_Algoritmos
+# Algoritmos
+Repositório destinado as aulas de algoritmos. 
